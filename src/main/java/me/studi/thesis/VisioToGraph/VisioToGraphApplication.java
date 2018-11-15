@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class VisioToGraphApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(VisioToGraphApplication.class, args);
-	}
+        SpringApplication.run(VisioToGraphApplication.class, args);
+    }
 }
