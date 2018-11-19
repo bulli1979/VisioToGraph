@@ -1,6 +1,7 @@
 package me.studi.thesis.VisioToGraph.file;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -10,6 +11,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import com.tinkerpop.blueprints.Graph;
+
+import me.studi.thesis.VisioToGraph.graph.GraphWorker;
 
 public class XMLVisioWorker implements XMLWorker {
 	private static final String NAMEU = "NameU";
@@ -35,6 +40,7 @@ public class XMLVisioWorker implements XMLWorker {
 			Document doc = dBuilder.parse(xml);
 			doc.getDocumentElement().normalize();
 			NodeList nodes = doc.getElementsByTagName(SHAPE);
+			shapeList = new ArrayList<>();
 			for (int i = 0; i < nodes.getLength(); i++) {
 				Node node = nodes.item(i);
 				addSpapeToList(node);
@@ -42,9 +48,13 @@ public class XMLVisioWorker implements XMLWorker {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-
 	}
 
+	public Graph getGraph() {
+		GraphWorker gw = new GraphWorker(); 
+		return gw.run(shapeList);
+	}
+	
 	private void addSpapeToList(Node node) {
 		try {
 			Element element = (Element) node;
@@ -72,7 +82,8 @@ public class XMLVisioWorker implements XMLWorker {
 
 	private void fillChild(Shape shape,Element child) {
 		if (child.getNodeName().equals(TEXT)) {
-			shape.setText(child.getNodeValue());
+			System.out.println(child.getTextContent());
+			shape.setText(child.getTextContent());
 		}
 		if (child.getNodeName().equals(CELL)) {
 			if(child.getAttribute(N).equals(BEGINN_TRIGGER)) {
@@ -84,7 +95,10 @@ public class XMLVisioWorker implements XMLWorker {
 		}
 	}
 
-	private int getValueFromChild(String attribute) {
-		return Integer.parseInt(attribute.split("\\.")[1].split("!")[0]);
+	private Integer getValueFromChild(String attribute) {
+		if(attribute.indexOf("!")>0) {
+			return Integer.parseInt(attribute.split("\\.")[1].split("!")[0]);
+		}
+		return null;
 	}
 }

@@ -21,6 +21,7 @@ public class TestFileHandling {
 		if (file != null) {
 			FileWorker fw = new FileWorker(file);
 			fw.execute();
+			
 		}
 	}
 	@Test

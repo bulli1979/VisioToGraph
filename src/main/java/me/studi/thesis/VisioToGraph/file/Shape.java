@@ -3,8 +3,8 @@ package me.studi.thesis.VisioToGraph.file;
 public class Shape {
 	private String text;
 	private int id;
-	private int from;
-	private int to;
+	private Integer from;
+	private Integer to;
 	private int weight;
 
 	public String getText() {
@@ -16,19 +16,19 @@ public class Shape {
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public int getFrom() {
+	public Integer getFrom() {
 		return from;
 	}
-	public void setFrom(int from) {
+	public void setFrom(Integer from) {
 		this.from = from;
 	}
-	public int getTo() {
+	public Integer getTo() {
 		return to;
 	}
-	public void setTo(int to) {
+	public void setTo(Integer to) {
 		this.to = to;
 	}
 	public int getWeight() {
