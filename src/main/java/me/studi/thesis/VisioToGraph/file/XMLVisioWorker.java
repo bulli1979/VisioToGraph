@@ -26,6 +26,7 @@ public class XMLVisioWorker implements XMLWorker {
 	private static final Object END_TRIGGER = "EndTrigger";
 	private static final String N = "N";
 	private static final String F = "F";
+	private static final String ID = "ID";
 
 
 	public XMLVisioWorker() {}
@@ -59,6 +60,7 @@ public class XMLVisioWorker implements XMLWorker {
 		try {
 			Element element = (Element) node;
 			String uName = element.getAttribute(NAMEU).toString();
+			String id =  element.getAttribute(ID);
 			int master = Integer.parseInt(element.getAttribute(MASTER));
 			NodeList childs = node.getChildNodes();
 			Shape shape = new Shape();
@@ -68,7 +70,7 @@ public class XMLVisioWorker implements XMLWorker {
 			}
 			ShapeType shapeType = ShapeType.getByMasterOrName(master, uName);
 			
-			shape.setId(master);
+			shape.setId(Integer.parseInt(id));
 			if (shapeType != null) {
 				shape.setWeight(shapeType.getWeight());
 				shapeList.add(shape);
@@ -87,9 +89,11 @@ public class XMLVisioWorker implements XMLWorker {
 		}
 		if (child.getNodeName().equals(CELL)) {
 			if(child.getAttribute(N).equals(BEGINN_TRIGGER)) {
+				System.out.println("Be:" + child.getAttribute(F));
 				shape.setFrom(getValueFromChild(child.getAttribute(F)));
 			}
 			if(child.getAttribute(N).equals(END_TRIGGER)) {
+				System.out.println("En:" + child.getAttribute(F));
 				shape.setTo(getValueFromChild(child.getAttribute(F)));
 			}
 		}

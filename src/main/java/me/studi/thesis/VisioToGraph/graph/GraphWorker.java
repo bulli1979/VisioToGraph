@@ -23,17 +23,24 @@ public class GraphWorker {
 
 	public Graph run(List<Shape> shapes) {
 		Graph graph = new TinkerGraph();
+		int c1 = 0;
+		int c2 = 0;
 		for (Shape shape : shapes) {
 			if (shape.getFrom() == null) {
+				System.out.println("Knoten " + shape.getText());
 				createVertex(graph.addVertex(null), shape);
+				c1++;
 			}
 		}
 
 		for (Shape shape : shapes) {
 			if (shape.getFrom() != null) {
+				System.out.println("Edge " + shape.getText());
 				createEdge(graph, shape);
+				c2++;
 			}
 		}
+		System.out.println(c1 + " - " + c2);
 		return graph;
 	}
 
